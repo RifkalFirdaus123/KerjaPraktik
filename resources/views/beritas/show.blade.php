@@ -21,7 +21,7 @@
         opacity: 0;
         transform: translateX(100px);
         transition: all 1s ease-out;
-        margin-top: 200px; /* Add this line */
+        margin-top: 20px; /* Add this line */
     }
 
     .sidebar.visible {
@@ -44,7 +44,7 @@
         </div>
 
         <!-- Sidebar with animation -->
-        <div class="col-md-4 sidebar" id="animatedSidebar">
+        <div class="col-md-4 sidebar "  id="animatedSidebar" style =" margin-top: 55px;">
             @php
                 $beritaTerbaru = \App\Models\Berita::latest()->first();
                 $eventTerbaru = \App\Models\Event::latest()->first();
