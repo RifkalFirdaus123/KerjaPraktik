@@ -88,7 +88,7 @@
             </p>
         </div>
 
-        <!-- Sidebar -->
+        <!-- Sidebar untuk berita dan event terbaru -->
         <div class="col-md-4 sidebar">
             @if($beritaTerbaru)  <!-- Pastikan ada berita terbaru -->
                 <div class="card">
