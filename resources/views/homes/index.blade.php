@@ -3,30 +3,87 @@
 @section('content')
 <style>
     .hero {
-        background: url("{{ asset('storage/logo/background.jpg') }}") no-repeat center center;
+        background: url("{{ asset('storage/logo/bgr.jpeg') }}") no-repeat center center;
         background-size: cover;
-        height: 400px;
-        width: 100vw; /* Pastikan menggunakan viewport width */
+        height: 700px;
+        width: 100vw;
         margin-left: calc(-50vw + 50%);
         position: relative;
         display: flex;
+        flex-direction: column; /* ubah ke column */
         align-items: center;
         justify-content: center;
         color: white;
         text-align: center;
-        
+        overflow: hidden; /* Add this to contain the wave */
+        padding: 20px; /* Optional: Add some padding */
     }
 
-    
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* tambahkan ini */
+        width: 100%;
+        z-index: 2; /* Ensure content stays above wave */
+        margin-top: 0; /* hilangkan margin negatif */
+    }
+
     .hero-logo {
-        max-width: 240px;
-        margin-bottom: 10px;
+        max-width: 200px; /* agar tidak terlalu besar */
+        margin-bottom: 24px;
+        transition: transform 0.3s ease;
+    }
+
+    .hero-logo:hover {
+        transform: scale(1.4);
     }
 
     .hero-text {
-        font-size: 1.8rem;
+        font-size: 2.7rem; /* lebih besar */
         font-weight: bold;
-        text-shadow: 2px 2px 5px #000;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+        max-width: 900px;
+        margin: 0 auto;
+        line-height: 1.2;
+        letter-spacing: 1px;
+    }
+
+    .custom-shape-divider-bottom-1746358433 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        z-index: 1;
+    }
+
+    .custom-shape-divider-bottom-1746358433 svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 150px; /* Reduced slightly for better proportion */
+        transform: rotateY(180deg); /* Optional: flip the wave horizontally */
+    }
+
+    .custom-shape-divider-bottom-1746358433 .shape-fill {
+        fill:rgb(255, 255, 255);
+    }
+
+    @media (max-width: 768px) {
+        .hero-text {
+            font-size: 1.2rem;
+            padding: 0 15px;
+        }
+
+        .hero-logo {
+            max-width: 70px;
+        }
+
+        .custom-shape-divider-bottom-1746358433 svg {
+            height: 100px;
+        }
     }
 
     .content-wrapper {
@@ -42,86 +99,188 @@
         margin-bottom: 20px;
     }
 
-    @media (max-width: 768px) {
-        .hero-text {
-            font-size: 1.2rem;
-        }
-
-        .hero-logo {
-            max-width: 70px;
-        }
-    }
-
     .card {
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* shadow dasar */
-        border-radius: 1rem;
+        transition: transform 0.3s ease;
     }
     
     .card:hover {
         transform: translateY(-5px);
     }
 
+    .event-gradient {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 70%;
+        background: linear-gradient(to top, rgba(25,25,112,0.85) 0%, rgba(25,25,112,0.3) 60%, rgba(25,25,112,0) 100%);
+        z-index: 1;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        pointer-events: none;
+    }
 
-}
+    .event-caption {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 2;
+        padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+        color: white;
+        width: 100%;
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7), 0 2px 8px #191970;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        text-align: left;
+        pointer-events: none;
+    }
 
+    .berita-gradient {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 70%;
+        background: linear-gradient(to top, rgba(25,25,112,0.85) 0%, rgba(25,25,112,0.3) 60%, rgba(25,25,112,0) 100%);
+        z-index: 1;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        pointer-events: none;
+    }
 
-
+    .berita-caption {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 2;
+        padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+        color: white;
+        width: 100%;
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.7), 0 2px 8px #000;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        text-align: left;
+        pointer-events: none;
+    }
 </style>
 
 <div class="hero">
-    <div>
-        <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo Lab" class="hero-logo">
+    <div class="hero-content">
+        <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo Lab" class="hero-logo mb-3">
         <div class="hero-text">
             Lab. Jaringan Komputer, Keamanan Data, dan Internet of Things
         </div>
     </div>
-</div>
-
-<div class="container content-wrapper">
-    <div class="row">
-        <!-- Konten utama -->
-        <div class="col-md-8">
-            <h3>Selamat datang di Laboratorium Jaringan Komputer, Keamanan Data, dan IoT</h3>
-            <p class="lab-description">
-                Laboratorium ini merupakan bagian dari Fakultas Teknik Universitas Tanjungpura yang fokus pada bidang jaringan komputer, keamanan siber, dan pengembangan sistem berbasis Internet of Things. Kami menyediakan sarana penelitian, praktikum, serta kegiatan akademik lainnya yang menunjang pembelajaran dan inovasi teknologi di bidang tersebut. 
-            </p>
-        </div>
-
-        <!-- Sidebar untuk berita dan event terbaru -->
-        <div class="col-md-4 sidebar">
-            @if($beritaTerbaru)  <!-- Pastikan ada berita terbaru -->
-                <div class="card">
-                    <a href="{{ route('beritas.index') }}" >
-                        <img src="{{ asset('storage/' . $beritaTerbaru->foto) }}" class="card-img-top" alt="Thumbnail Berita">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $beritaTerbaru->judul }}</h5>
-                        <p class="card-text">{{ Str::limit($beritaTerbaru->isi, 100) }}</p>
-                        <a href="{{ route('beritas.index') }}" class="btn btn-primary btn-sm">Lihat Berita</a>
-                    </div>
-                </div>
-            @else
-                <p>Tidak ada berita terbaru.</p>
-            @endif
-
-            <!-- Menampilkan Event Terbaru -->
-            @if($eventTerbaru)  <!-- Pastikan ada event terbaru -->
-                <div class="card mt-4">
-                    <a href="{{ route('events.index') }}">
-                        <img src="{{ asset('storage/' . $eventTerbaru->foto) }}" class="card-img-top" alt="Thumbnail Event">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $eventTerbaru->judul }}</h5>
-                        <p class="card-text">{{ Str::limit($eventTerbaru->deskripsi, 100) }}</p>
-                        <a href="{{ route('events.index') }}" class="btn btn-primary btn-sm">Lihat Event</a>
-                    </div>
-                </div>
-            @else
-                <p>Tidak ada event terbaru.</p>
-            @endif
-        </div>
+    <div class="custom-shape-divider-bottom-1746358433">
+        <svg data-name="Layer 1" 
+             xmlns="http://www.w3.org/2000/svg" 
+             viewBox="0 0 1200 120" 
+             preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" 
+                  class="shape-fill">
+            </path>
+        </svg>
     </div>
 </div>
 
+<div class="container-fluid px-2 px-md-5 py-4">
+    <div class="row justify-content-start"> <!-- Changed to justify-content-start for left alignment -->
+        <div class="col-12 col-md-11 col-lg-10"> <!-- Adjusted column width to make it wider -->
+
+            <!-- Penjelasan Lab -->
+            <div class="mb-4">
+                <h3 class="text-start">Selamat datang di Laboratorium Jaringan Komputer, Keamanan Data, dan IoT</h3> <!-- Changed to text-start -->
+                <div class="lab-description text-start"> <!-- Added text-start -->
+                    {!! $labDescription !!}
+                </div>
+                @auth
+                @if(auth()->user()->is_admin)
+                <a href="{{ route('admin.editLabDescription') }}" class="btn btn-warning btn-sm mt-2">Edit Penjelasan</a>
+                @endif
+                @endauth
+            </div>
+
+            <!-- Carousel Berita -->
+            <div class="carousel-wrapper mb-5">
+                <h4 class="mb-3 text-center"></h4>
+                <div id="carouselBerita" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        @foreach($beritaTerbaru as $i => $berita)
+                            <button type="button" data-bs-target="#carouselBerita" data-bs-slide-to="{{ $i }}" class="{{ $i == 0 ? 'active' : '' }}" @if($i == 0) aria-current="true" @endif aria-label="Slide {{ $i+1 }}"></button>
+                        @endforeach
+                    </div>
+                    <div class="carousel-inner">
+                        @foreach($beritaTerbaru as $i => $berita)
+                            <div class="carousel-item {{ $i == 0 ? 'active' : '' }}">
+                                <div class="position-relative" style="border-radius:1rem;overflow:hidden;">
+                                    <img src="{{ asset('storage/' . $berita->foto) }}" class="d-block w-100" style="height:300px;object-fit:cover;" alt="Berita">
+                                    <div class="berita-gradient"></div>
+                                    <div class="berita-caption">
+                                        <h5 class="fw-bold mb-0">{{ $berita->judul }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselBerita" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselBerita" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Carousel Event -->
+            <div class="carousel-wrapper mb-5">
+                <h4 class="mb-3 text-center"></h4>
+                <div id="carouselEvent" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        @foreach($eventTerbaru as $i => $event)
+                            <button type="button" data-bs-target="#carouselEvent" data-bs-slide-to="{{ $i }}" class="{{ $i == 0 ? 'active' : '' }}" @if($i == 0) aria-current="true" @endif aria-label="Slide {{ $i+1 }}"></button>
+                        @endforeach
+                    </div>
+                    <div class="carousel-inner">
+                        @foreach($eventTerbaru as $i => $event)
+                            <div class="carousel-item {{ $i == 0 ? 'active' : '' }}">
+                                <div class="position-relative" style="border-radius:1rem;overflow:hidden;">
+                                    <img src="{{ asset('storage/' . $event->foto) }}" class="d-block w-100" style="height:300px;object-fit:cover;" alt="Event">
+                                    <div class="event-gradient"></div>
+                                    <div class="event-caption">
+                                        <h5 class="fw-bold mb-0">{{ $event->nama_event }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselEvent" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselEvent" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Section Dinamis -->
+            @foreach($sections as $section)
+                    <h4>{{ $section->title }}</h4>
+                    <div>{!! $section->content !!}</div>
+                </div>iv>{!! $section->content !!}</div>
+            @endforeach
+            
+            @auth
+            @if(auth()->user()->is_admin)
+            <a href="{{ route('admin.addSection') }}" class="btn btn-success btn-sm mb-4">Tambah Section</a>
+            @endif
+            @endauth
+        </div>
+    </div>
+</div>
+</div>
 @endsection
+

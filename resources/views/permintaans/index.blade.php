@@ -3,7 +3,8 @@
 
 @section('breadcrumb')
   <li class="breadcrumb-item"><a href="{{ route('homes.index') }}">Home</a></li>
-  <li class="breadcrumb-item active" aria-current="page">Peminjaman Barang</li>
+  <li class="breadcrumb-item active" aria-current="page">Permintaans</li>
+@endsection
 @section('content')
 <style>
     .table {

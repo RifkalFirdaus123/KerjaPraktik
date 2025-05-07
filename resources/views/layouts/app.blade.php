@@ -39,7 +39,7 @@
     }
   </style>
 </head>
-<body>
+<body class="mt-0 pt-0">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#191970;">
   <div class="container">
@@ -80,7 +80,7 @@
   <main>
     {{-- Breadcrumb Section --}}
     @hasSection('breadcrumb')
-      <div class="container">
+      <div class="container mt-5">
         <nav aria-label="breadcrumb" class="mb-3 d-inline-block" style="margin-left: 13px;">
           <ol class="breadcrumb bg-white p-2 rounded shadow-sm mb-0">
             @yield('breadcrumb')

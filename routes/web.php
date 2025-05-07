@@ -9,6 +9,7 @@ use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\PeminjamanBarangController;
 use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 
 // Halaman depan menampilkan daftar dosen
 Route::get('/',   [HomeController::class, 'index'])->name('home.index');
@@ -90,5 +91,9 @@ Route::get('/kehadirans/export-pdf/{eventId}', [KehadiranController::class, 'exp
 
 Route::put('/permintaan/{id}/cancel', [PermintaanController::class, 'markAsCancelled'])->name('peminjaman.cancel');
 Route::put('/permintaan/{id}/complete', [PermintaanController::class, 'markAsCompleted'])->name('peminjaman.complete');
+
+Route::get('/admin/edit-lab-description', [AdminController::class, 'editLabDescription'])->name('admin.editLabDescription');
+Route::get('/admin/add-section', [AdminController::class, 'addSection'])->name('admin.addSection');
+
 require __DIR__.'/auth.php';
 
