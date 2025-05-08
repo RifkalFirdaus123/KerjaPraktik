@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }
 
-  /**
+    /**
      * Reverse the migrations.
      */
     public function down(): void

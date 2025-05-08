@@ -162,6 +162,15 @@
         text-align: left;
         pointer-events: none;
     }
+
+    .berita-caption a:hover, .event-caption a:hover {
+        text-decoration: underline !important;
+        opacity: 0.9;
+    }
+
+    .berita-caption, .event-caption {
+        pointer-events: auto !important; /* Override previous pointer-events: none */
+    }
 </style>
 
 <div class="hero">
@@ -200,6 +209,42 @@
                 @endauth
             </div>
 
+            <!-- Sections -->
+            {{--
+            <div class="sections-wrapper mb-4">
+                @foreach($sections as $section)
+                <div class="section-item mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4>{{ $section->title }}</h4>
+                        @auth
+                            @if(auth()->user()->is_admin)
+                            <div class="btn-group">
+                                <a href="{{ route('sections.edit', $section) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('sections.destroy', $section) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus section ini?')">Hapus</button>
+                                </form>
+                            </div>
+                            @endif
+                        @endauth
+                    </div>
+                    <div class="section-content">
+                        {!! $section->content !!}
+                    </div>
+                </div>
+                @endforeach
+
+                @auth
+                    @if(auth()->user()->is_admin)
+                    <a href="{{ route('sections.create') }}" class="btn btn-success btn-sm mb-4">
+                        <i class="fas fa-plus"></i> Tambah Section Baru
+                    </a>
+                    @endif
+                @endauth
+            </div>
+            --}}
+
             <!-- Carousel Berita -->
             <div class="carousel-wrapper mb-5">
                 <h4 class="mb-3 text-center"></h4>
@@ -216,7 +261,9 @@
                                     <img src="{{ asset('storage/' . $berita->foto) }}" class="d-block w-100" style="height:300px;object-fit:cover;" alt="Berita">
                                     <div class="berita-gradient"></div>
                                     <div class="berita-caption">
-                                        <h5 class="fw-bold mb-0">{{ $berita->judul }}</h5>
+                                        <a href="{{ route('beritas.show', $berita->id) }}" class="text-white text-decoration-none">
+                                            <h5 class="fw-bold mb-0">{{ $berita->judul }}</h5>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +296,9 @@
                                     <img src="{{ asset('storage/' . $event->foto) }}" class="d-block w-100" style="height:300px;object-fit:cover;" alt="Event">
                                     <div class="event-gradient"></div>
                                     <div class="event-caption">
-                                        <h5 class="fw-bold mb-0">{{ $event->nama_event }}</h5>
+                                        <a href="{{ route('events.show', $event->id) }}" class="text-white text-decoration-none">
+                                            <h5 class="fw-bold mb-0">{{ $event->nama_event }}</h5>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -265,19 +314,6 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Section Dinamis -->
-            @foreach($sections as $section)
-                    <h4>{{ $section->title }}</h4>
-                    <div>{!! $section->content !!}</div>
-                </div>iv>{!! $section->content !!}</div>
-            @endforeach
-            
-            @auth
-            @if(auth()->user()->is_admin)
-            <a href="{{ route('admin.addSection') }}" class="btn btn-success btn-sm mb-4">Tambah Section</a>
-            @endif
-            @endauth
         </div>
     </div>
 </div>

@@ -56,7 +56,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>#</th>
+                <th>No</th>
                 <th>Nama Peminjam</th>
                 <th>NIM/NIP</th>
                 <th>Nama Barang</th>
@@ -113,7 +113,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>#</th>
+            <th>No</th>
             <th>Nama Peminjam</th>
             <th>NIM/NIP</th>
             <th>Nama Barang</th>
@@ -140,10 +140,7 @@
                         <form action="{{ route('peminjaman.cancel', $peminjaman->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('PUT')
-                            <button type="submit" class="btn btn-danger btn-sm" 
-                                    onclick="return confirm('Apakah Anda yakin ingin membatalkan peminjaman ini?')">
-                                Batal
-                            </button>
+                            
                         </form>
 
                         <form action="{{ route('peminjaman.complete', $peminjaman->id) }}" method="POST" class="d-inline">

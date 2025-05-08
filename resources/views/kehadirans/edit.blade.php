@@ -25,7 +25,7 @@
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>No</th>
                         <th>Nama</th>
                         <th>NIM</th>
                         <th>Angkatan</th>

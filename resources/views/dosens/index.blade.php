@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumb')
-  <li class="breadcrumb-item"><a href="{{ route('homes.index') }}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Home</a></li>
   <li class="breadcrumb-item active" aria-current="page">Dosen</li>
 @endsection
 
@@ -22,6 +22,8 @@
                         <th>Nama Lengkap</th>
                         <th>NIP</th>
                         <th>Email</th>
+                        <th>Status</th>
+                        <th>Mata Kuliah Diampu</th>
                         @auth
                         <th class="text-center">Aksi</th>
                         @endauth
@@ -34,9 +36,9 @@
                             @if($dosen->foto)
                             <img 
                                 src="{{ asset('storage/' . $dosen->foto) }}" 
-                                alt="{{ asset('storage/logo/foto.png') }}"
+                                alt="{{ $dosen->nama }}"
                                 width="auto" 
-                                height=100px
+                                height="100px"
                                 class="rounded">                   
                             @else
                             <img 
@@ -49,7 +51,18 @@
                         <td class="align-middle">{{ $dosen->nama }}</td>
                         <td class="align-middle">{{ $dosen->nip }}</td>
                         <td class="align-middle">{{ $dosen->email }}</td>
-                        
+                        <td class="align-middle">{{ $dosen->status }}</td>
+                        <td class="align-middle">
+                            @if($dosen->matkul && is_array($dosen->matkul))
+                                <ul class="mb-0 ps-3">
+                                    @foreach($dosen->matkul as $mk)
+                                        <li>{{ $mk }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </td>
                         @auth
                         <td class="text-center align-middle">
                             <a href="{{ route('dosens.edit', $dosen) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -74,19 +87,15 @@
         overflow: hidden;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    
     .table {
         margin-bottom: 0;
     }
-    
     .table th:first-child {
         border-top-left-radius: 8px;
     }
-    
     .table th:last-child {
         border-top-right-radius: 8px;
     }
-    
     .table td, .table th {
         vertical-align: middle;
     }

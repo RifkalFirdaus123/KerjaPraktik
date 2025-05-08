@@ -12,11 +12,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $labDescription = Setting::first()->lab_description ?? 'Deskripsi default...'; // Atur sesuai model/field Anda
-        $sections = Section::orderBy('order')->get(); // Section dinamis, jika ada
-        $beritaTerbaru = Berita::latest()->take(5)->get();
-        $eventTerbaru = Event::latest()->take(5)->get();
-
-        return view('homes.index', compact('labDescription', 'sections', 'beritaTerbaru', 'eventTerbaru'));
+        return view('homes.index', [
+            'labDescription' => Setting::first()?->lab_description,
+            'beritaTerbaru' => Berita::latest()->take(5)->get(),
+            'eventTerbaru' => Event::latest()->take(5)->get(),
+            // Remove or comment out sections
+            // 'sections' => Section::orderBy('order')->get()
+        ]);
     }
 }

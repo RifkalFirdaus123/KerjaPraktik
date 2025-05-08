@@ -11,6 +11,11 @@ class Dosen extends Model
 
     // Kolom yang dapat diisi
     protected $fillable = [
-        'nama', 'nip', 'email', 'foto', 'bidang_keahlian'
+        'nama', 'nip', 'email', 'foto', 'status', 'matkul'
+    ];
+
+    // Cast matkul ke array otomatis
+    protected $casts = [
+        'matkul' => 'array',
     ];
 }

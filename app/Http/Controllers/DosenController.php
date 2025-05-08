@@ -15,7 +15,7 @@ class DosenController extends Controller
 
     public function index()
     {
-        $dosens = Dosen::latest()->get();
+        $dosens = Dosen::orderBy('nama', 'asc')->get();
         return view('dosens.index', compact('dosens'));
     }
 
@@ -30,15 +30,16 @@ class DosenController extends Controller
             'nama' => 'required',
             'nip' => 'required|unique:dosens,nip',
             'email' => 'required|email|unique:dosens,email',
-            'foto' => 'nullable|image|max:2048', // Validasi foto opsional
+            'status' => 'required',
+            'matkul' => 'nullable|array',
+            'matkul.*' => 'nullable|string',
+            'foto' => 'nullable|image|max:2048',
         ]);
 
         if ($request->hasFile('foto')) {
-            // Ini akan mengembalikan "fotos/namafile.jpg"
             $path = $request->file('foto')->store('fotos', 'public');
             $validated['foto'] = $path;
         }
-        
 
         Dosen::create($validated);
 
@@ -56,11 +57,13 @@ class DosenController extends Controller
             'nama' => 'required',
             'nip' => 'required|unique:dosens,nip,' . $dosen->id,
             'email' => 'required|email|unique:dosens,email,' . $dosen->id,
+            'status' => 'required',
+            'matkul' => 'nullable|array',
+            'matkul.*' => 'nullable|string',
             'foto' => 'nullable|image|max:2048',
         ]);
 
         if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
             if ($dosen->foto) {
                 Storage::disk('public')->delete($dosen->foto);
             }

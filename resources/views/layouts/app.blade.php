@@ -6,16 +6,33 @@
   <title>Aplikasi Laravel</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <style>
     html, body {
       height: 100%;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
       padding-top: 56px;
     }
 
-    main.container {
-      min-height: calc(100vh - 56px);
-      padding-top: 1rem;
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+      min-height: calc(100vh - 56px - 60px); /* 56px navbar, 60px footer */
+      padding-bottom: 2rem;
+    }
+
+    footer {
+      flex-shrink: 0;
+      background-color: #191970;
+      color: white;
+      padding: 1rem 0;
     }
 
     .navbar {

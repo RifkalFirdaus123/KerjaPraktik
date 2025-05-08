@@ -13,7 +13,9 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nip')->unique();
             $table->string('email')->nullable();
-            $table->string('foto')->nullable(); // Menambahkan kolom foto
+            $table->string('status')->nullable(); // Kolom status (Anggota, Sekretaris KK, dst)
+            $table->json('matkul')->nullable();    // Kolom mata kuliah diampu (array/list)
+            $table->string('foto')->nullable();    // Kolom foto
             $table->timestamps();
         });
     }

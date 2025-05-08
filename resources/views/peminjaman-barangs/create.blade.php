@@ -6,7 +6,7 @@
 @section('content')
 <div class="container">
     <h2>Form Peminjaman Barang</h2>
-    <form action="{{ route('peminjaman-barangs.store') }}" method="POST">
+    <form id="peminjamanForm" action="{{ route('peminjaman-barangs.store') }}" method="POST">
         @csrf
         <div class="mb-3">
             <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
@@ -39,4 +39,64 @@
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tglPinjam = document.getElementById('tanggal_peminjaman');
+    const tglKembali = document.getElementById('tanggal_pengembalian');
+    const form = document.getElementById('peminjamanForm');
+    
+    // Set min date untuk tanggal peminjaman ke hari ini
+    const today = new Date().toISOString().split('T')[0];
+    tglPinjam.min = today;
+    tglKembali.min = today;
+
+    // Validasi saat form disubmit
+    form.addEventListener('submit', function(e) {
+        if(tglKembali.value < tglPinjam.value) {
+            e.preventDefault();
+            alert('Tanggal pengembalian tidak boleh lebih awal dari tanggal peminjaman!');
+            tglKembali.value = tglPinjam.value;
+        } else {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Submit form using fetch API
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Peminjaman Berhasil Di Ajukan. Terima Kasih!');
+                window.location.href = '{{ route("peminjaman-barangs.index") }}';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            });
+        }
+    });
+    
+    // Update min date tanggal pengembalian saat tanggal peminjaman berubah
+    tglPinjam.addEventListener('change', function() {
+        tglKembali.min = this.value;
+        
+        // Reset tanggal pengembalian jika lebih awal dari peminjaman
+        if(tglKembali.value && tglKembali.value < this.value) {
+            tglKembali.value = this.value;
+        }
+    });
+
+    // Tambahan validasi saat tanggal pengembalian diubah
+    tglKembali.addEventListener('change', function() {
+        if(this.value < tglPinjam.value) {
+            alert('Tanggal pengembalian tidak boleh lebih awal dari tanggal peminjaman!');
+            this.value = tglPinjam.value;
+        }
+    });
+});
+</script>
 @endsection
