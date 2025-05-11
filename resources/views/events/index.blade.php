@@ -33,7 +33,8 @@
                         
                         <p class="card-text text-muted mb-2">
                             <i class="bi bi-calendar"></i> {{ $event->tanggal_event }} 
-                            <i class="bi bi-clock ms-2"></i> {{ $event->waktu }}
+                            <i class="bi bi-clock ms-2"></i> {{ \Carbon\Carbon::parse($event->waktu)->format('H:i') }}
+
                         </p>
                         
                         <p class="card-text flex-grow-1">{{ Str::limit($event->deskripsi, 100) }}</p>

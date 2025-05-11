@@ -6,6 +6,7 @@
   <title>Aplikasi Laravel</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <style>
@@ -75,9 +76,10 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('beritas.index') }}">Berita</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('events.index') }}">Event</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('peminjaman-barangs.index') }}">Peminjaman Barang</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('permintaans.index') }}">Permintaan</a></li>
+
         @auth
           <li class="nav-item"><a class="nav-link" href="{{ route('kehadirans.index') }}">Kehadiran</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('permintaans.index') }}">Permintaan</a></li>
           <li class="nav-item">
             <form method="POST" action="{{ route('logout') }}" class="d-inline">
               @csrf

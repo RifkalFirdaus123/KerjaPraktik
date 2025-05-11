@@ -63,8 +63,10 @@
                 <th>Jumlah</th>
                 <th>Tanggal Peminjaman</th>
                 <th>Tanggal Pengembalian</th>
-                <th>Aksi</th>
                 <th>Status</th>
+                @auth
+                    <th>Aksi</th>
+                @endauth
             </tr>
         </thead>
         <tbody>
@@ -83,9 +85,10 @@
                     @elseif($peminjaman->status == 'Tidak Disetujui')
                         <span class="badge bg-danger">Tidak Disetujui</span>
                     @else
+                        <span class="badge bg-warning">Menunggu</span>
                     @endif
-                    
                 </td>
+                @auth
                 <td>
                     @if($peminjaman->status == null || $peminjaman->status == 'Belum Disetujui')
                         <!-- Tombol Disetujui -->
@@ -104,71 +107,68 @@
                         <span class="text-muted">Status telah diproses</span>
                     @endif
                 </td>
+                @endauth
             </tr>
             @endforeach
         </tbody>
     </table>
 
+    <!-- Tabel Permintaan yang Disetujui -->
     <h2>Permintaan yang Disetujui</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama Peminjam</th>
-            <th>NIM/NIP</th>
-            <th>Nama Barang</th>
-            <th>Jumlah</th>
-            <th>Tanggal Peminjaman</th>
-            <th>Tanggal Pengembalian</th>
-            <th>Aksi</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($peminjamanBarangsDisetujui as $peminjaman)
-        <tr>
-            <td>{{ $loop->iteration }}</td>
-            <td>{{ $peminjaman->nama_peminjam }}</td>
-            <td>{{ $peminjaman->nim_nip }}</td>
-            <td>{{ $peminjaman->nama_barang }}</td>
-            <td>{{ $peminjaman->jumlah }}</td>
-            <td>{{ $peminjaman->tanggal_peminjaman }}</td>
-            <td>{{ $peminjaman->tanggal_pengembalian }}</td>
-            <td>
-                @if($peminjaman->status === 'Disetujui')
-                    <div class="d-flex gap-2">
-                        <form action="{{ route('peminjaman.cancel', $peminjaman->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('PUT')
-                            
-                        </form>
-
-                        <form action="{{ route('peminjaman.complete', $peminjaman->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-success btn-sm"
-                                    onclick="return confirm('Apakah Anda yakin ingin menyelesaikan peminjaman ini?')">
-                                Selesai
-                            </button>
-                        </form>
-                    </div>
-                @else
-                    <span class="text-muted">Status telah diproses</span>
-                @endif
-            </td>
-            <td>
-                <span class="badge {{ 
-                    $peminjaman->status === 'Batal Dipinjam' ? 'bg-danger' : 
-                    ($peminjaman->status === 'Selesai Dipinjam' ? 'bg-success' : 
-                    ($peminjaman->status === 'Disetujui' ? 'bg-primary' : 'bg-secondary')) 
-                }}">
-                    {{ $peminjaman->status }}
-                </span>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Peminjam</th>
+                <th>NIM/NIP</th>
+                <th>Nama Barang</th>
+                <th>Jumlah</th>
+                <th>Tanggal Peminjaman</th>
+                <th>Tanggal Pengembalian</th>
+                <th>Status</th>
+                @auth
+                    <th>Aksi</th>
+                @endauth
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($peminjamanBarangsDisetujui as $peminjaman)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $peminjaman->nama_peminjam }}</td>
+                <td>{{ $peminjaman->nim_nip }}</td>
+                <td>{{ $peminjaman->nama_barang }}</td>
+                <td>{{ $peminjaman->jumlah }}</td>
+                <td>{{ $peminjaman->tanggal_peminjaman }}</td>
+                <td>{{ $peminjaman->tanggal_pengembalian }}</td>
+                <td>
+                    <span class="badge {{ 
+                        $peminjaman->status === 'Batal Dipinjam' ? 'bg-danger' : 
+                        ($peminjaman->status === 'Selesai Dipinjam' ? 'bg-success' : 
+                        ($peminjaman->status === 'Disetujui' ? 'bg-primary' : 'bg-secondary')) 
+                    }}">
+                        {{ $peminjaman->status }}
+                    </span>
+                </td>
+                @auth
+                <td>
+                    @if($peminjaman->status === 'Disetujui')
+                        <div class="d-flex gap-2">
+                            <form action="{{ route('peminjaman.complete', $peminjaman->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-success btn-sm"
+                                        onclick="return confirm('Apakah Anda yakin ingin menyelesaikan peminjaman ini?')">
+                                    Selesai
+                                </button>
+                            </form>
+                        </div>
+                    @endif
+                </td>
+                @endauth
+            </tr>
+            @endforeach
+        </tbody>
     </table>
-
 </div>
 @endsection

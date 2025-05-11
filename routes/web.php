@@ -95,5 +95,7 @@ Route::put('/permintaan/{id}/complete', [PermintaanController::class, 'markAsCom
 Route::get('/admin/edit-lab-description', [AdminController::class, 'editLabDescription'])->name('admin.editLabDescription');
 Route::get('/admin/add-section', [AdminController::class, 'addSection'])->name('admin.addSection');
 
+
+Route::resource('descriptions', DescriptionController::class)->middleware('auth');
 require __DIR__.'/auth.php';
 
