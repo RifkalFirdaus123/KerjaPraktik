@@ -13,7 +13,8 @@ class PermintaanController extends Controller
         // Tampilkan 5 data terbaru, paginasi
         $peminjamanBarangs = \App\Models\PeminjamanBarang::latest()->paginate(5);
 
-        $peminjamanBarangsDisetujui = \App\Models\PeminjamanBarang::where('status', 'Disetujui')
+        // Ambil semua yang statusnya Disetujui atau Selesai Dipinjam untuk tabel bawah
+        $peminjamanBarangsDisetujui = \App\Models\PeminjamanBarang::whereIn('status', ['Disetujui', 'Selesai Dipinjam'])
             ->latest()
             ->paginate(5, ['*'], 'disetujui_page');
 
@@ -88,8 +89,14 @@ class PermintaanController extends Controller
             $peminjaman = PeminjamanBarang::findOrFail($id);
 
             if ($peminjaman->status === 'Disetujui') {
-                $peminjaman->status = 'Selesai Dipinjam';
-                $peminjaman->save();
+                // Update status untuk semua entri dengan data yang sama
+                PeminjamanBarang::where('nama_peminjam', $peminjaman->nama_peminjam)
+                    ->where('nim_nip', $peminjaman->nim_nip)
+                    ->where('nama_barang', $peminjaman->nama_barang)
+                    ->where('jumlah', $peminjaman->jumlah)
+                    ->where('tanggal_peminjaman', $peminjaman->tanggal_peminjaman)
+                    ->where('tanggal_pengembalian', $peminjaman->tanggal_pengembalian)
+                    ->update(['status' => 'Selesai Dipinjam']);
 
                 return redirect()->route('permintaans.index')
                     ->with('success', 'Peminjaman telah ditandai sebagai selesai.');

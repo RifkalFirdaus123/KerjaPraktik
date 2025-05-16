@@ -96,6 +96,12 @@ Route::get('/admin/edit-lab-description', [AdminController::class, 'editLabDescr
 Route::get('/admin/add-section', [AdminController::class, 'addSection'])->name('admin.addSection');
 
 
+// Halaman ganti password untuk admin
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/change-password', [\App\Http\Controllers\AdminController::class, 'showChangePasswordForm'])->name('admin.changePasswordForm');
+    Route::post('/admin/change-password', [\App\Http\Controllers\AdminController::class, 'changePassword'])->name('admin.changePassword');
+});
+
 Route::resource('descriptions', DescriptionController::class)->middleware('auth');
 require __DIR__.'/auth.php';
 

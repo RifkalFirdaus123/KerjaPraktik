@@ -79,6 +79,9 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('permintaans.index') }}">Permintaan</a></li>
 
         @auth
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.changePasswordForm') }}">Admin</a>
+          </li>
           <li class="nav-item"><a class="nav-link" href="{{ route('kehadirans.index') }}">Kehadiran</a></li>
           <li class="nav-item">
             <form method="POST" action="{{ route('logout') }}" class="d-inline">

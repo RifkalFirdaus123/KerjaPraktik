@@ -79,12 +79,12 @@
                 <td>{{ $peminjaman->nama_barang }}</td>
                 <td>{{ $peminjaman->jumlah }}</td>
                 <td>{{ $peminjaman->tanggal_peminjaman }}</td>
-                <td>{{ $peminjaman->tanggal_pengembalian }}</td>
-                <td>
-                    @if($peminjaman->status == 'Disetujui')
+                <td>{{ $peminjaman->tanggal_pengembalian }}</td>                <td>                    @if($peminjaman->status == 'Disetujui')
                         <span class="badge bg-success">Disetujui</span>
                     @elseif($peminjaman->status == 'Tidak Disetujui')
                         <span class="badge bg-danger">Tidak Disetujui</span>
+                    @elseif($peminjaman->status == 'Selesai Dipinjam')
+                        <span class="badge bg-primary">Selesai Dipinjam</span>
                     @else
                         <span class="badge bg-warning">Menunggu</span>
                     @endif
@@ -148,7 +148,7 @@
                 <td>
                     <span class="badge {{ 
                         $peminjaman->status === 'Batal Dipinjam' ? 'bg-danger' : 
-                        ($peminjaman->status === 'Selesai Dipinjam' ? 'bg-success' : 
+                        ($peminjaman->status === 'Selesai Dipinjam' ? 'bg-primary' : 
                         ($peminjaman->status === 'Disetujui' ? 'bg-primary' : 'bg-secondary')) 
                     }}">
                         {{ $peminjaman->status }}
@@ -167,6 +167,8 @@
                                 </button>
                             </form>
                         </div>
+                    @elseif($peminjaman->status === 'Selesai Dipinjam')
+                        <span class="badge bg-success">Selesai</span>
                     @endif
                 </td>
                 @endauth
