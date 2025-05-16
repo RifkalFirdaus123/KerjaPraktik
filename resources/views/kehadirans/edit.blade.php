@@ -41,7 +41,7 @@
                             <td>{{ $kehadiran->angkatan }}</td>
                             <td>
                                 <!-- Hapus Kehadiran -->
-                                <form action="{{ route('kehadirans.destroy', $kehadiran) }}" method="POST" class="d-inline">
+                                <form action="{{ route('kehadirans.destroy', $kehadiran) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kehadiran ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Hapus</button>
