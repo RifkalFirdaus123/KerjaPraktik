@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 class PermintaanController extends Controller
 {
     // Menampilkan daftar semua permintaan dan yang disetujui
-    public function index()
+    public function index(Request $request)
     {
-        $peminjamanBarangs = PeminjamanBarang::all();
+        // Tampilkan 5 data terbaru, paginasi
+        $peminjamanBarangs = \App\Models\PeminjamanBarang::latest()->paginate(5);
 
-        $peminjamanBarangsDisetujui = PeminjamanBarang::whereIn('status', [
-            'Disetujui', 'Selesai Dipinjam', 'Batal Dipinjam'
-        ])->get();
+        $peminjamanBarangsDisetujui = \App\Models\PeminjamanBarang::where('status', 'Disetujui')
+            ->latest()
+            ->paginate(5, ['*'], 'disetujui_page');
 
         return view('permintaans.index', compact('peminjamanBarangs', 'peminjamanBarangsDisetujui'));
     }

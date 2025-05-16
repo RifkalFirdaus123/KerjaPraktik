@@ -52,7 +52,8 @@
 </style>
 
 <div class="container">
-    <h2>Daftar Permintaan Peminjaman Barang</h2>
+    <h2>Permintaan Peminjaman Barang</h2>
+    <!-- Tabel Permintaan -->
     <table class="table">
         <thead>
             <tr>
@@ -95,13 +96,13 @@
                         <form action="{{ route('permintaans.updateStatus', $peminjaman->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('PUT')
-                            <button type="submit" class="btn btn-success">Disetujui</button>
+                            <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda yakin ingin menyetujui permintaan ini?')">Disetujui</button>
                         </form>
                         <!-- Tombol Tidak Disetujui -->
                         <form action="{{ route('permintaans.updateStatusDitolak', $peminjaman->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('PUT')
-                            <button type="submit" class="btn btn-danger">Tidak Disetujui</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menolak permintaan ini?')">Tidak Disetujui</button>
                         </form>
                     @else
                         <span class="text-muted">Status telah diproses</span>
@@ -112,6 +113,9 @@
             @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        {{ $peminjamanBarangs->links('pagination::bootstrap-5') }}
+    </div>
 
     <!-- Tabel Permintaan yang Disetujui -->
     <h2>Permintaan yang Disetujui</h2>
@@ -170,5 +174,8 @@
             @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        {{ $peminjamanBarangsDisetujui->links('pagination::bootstrap-5', ['paginator' => $peminjamanBarangsDisetujui, 'pageName' => 'disetujui_page']) }}
+    </div>
 </div>
 @endsection
