@@ -149,7 +149,7 @@
                     <span class="badge {{ 
                         $peminjaman->status === 'Batal Dipinjam' ? 'bg-danger' : 
                         ($peminjaman->status === 'Selesai Dipinjam' ? 'bg-primary' : 
-                        ($peminjaman->status === 'Disetujui' ? 'bg-primary' : 'bg-secondary')) 
+                        ($peminjaman->status === 'Disetujui' ? 'bg-success' : 'bg-secondary')) 
                     }}">
                         {{ $peminjaman->status }}
                     </span>
@@ -168,7 +168,7 @@
                             </form>
                         </div>
                     @elseif($peminjaman->status === 'Selesai Dipinjam')
-                        <span class="badge bg-success">Selesai</span>
+                        <p>Status Telah di Proses</p>
                     @endif
                 </td>
                 @endauth
